@@ -1,0 +1,11 @@
+# Python bytecode.
+*.pyc
+__pycache__
+
+# CAD files
+*.fcstd*
+*.stl
+*.obj
+
+# Printer files.
+*.gcode

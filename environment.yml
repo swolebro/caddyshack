@@ -1,0 +1,20 @@
+# If you know enough about conda to actually be reading this file, then you
+# know enough to install these dependencies in whatever environment you please.
+# I'm naming this one "freecad" generically, instead of designating the
+# environment for this project, since **I personally** don't want to be have
+# an environment with 2GB of dependencies dedicated to a single thing,
+# only to install it all again for the next one.
+
+name: freecad
+channels:
+  - freecad
+  - conda-forge
+  - defaults
+dependencies:
+  - freecad=0.18b0
+  - numpy=1.15.0
+  - pandas=0.23.4
+  - python=3.6.6
+  - pyyaml=3.13
+  - pip:
+    - cadquery==1.2.0
