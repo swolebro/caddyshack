@@ -1,0 +1,41 @@
+ALL RIGHTS RESERVED.
+
+---
+
+I enourage you to read this essay by Martin Sustrik, one of the authors of
+ZeroMQ, and a far more intelligent man than I. Portions of his essay are
+excerpted below.
+
+http://250bpm.com/blog:82
+
+> The projects without license can in theory be considered open source (the
+> source is published after all) but legally, the copyright is still owned by
+> the authors and using it means infringing their copyright.
+
+> The interesting question is why would anyone make such a contradictory
+> statement? Why would they make the code physically available to everyone and
+> yet make it legally unavailable?
+
+> One possibility is that people are just lazy. Adding a license to a project
+> is work and they don't care enough to do it.
+
+> There's a different possibility though. It's going to be weird, but bear with
+> me, I have a point to make...
+
+> So, the other possibility is that authors deliberately reject the legal
+> system per se. The reasoning can go as follows: I do care about my peers
+> using my software. I don't give a damn about whether the lawyers and
+> mega-corporations they work for use it. So, if you are like me and you don't
+> care about all the intellectual property antics, here's my project, feel free
+> to use it. If you are the kind of moron who wants to have their legal ass
+> covered, go screw yourself.
+
+> And it's not hard to figure out why. It is often said that law is a kind of
+> trade-off. You give up some of your personal freedom and what you get in
+> return is a civilised way of resolving conflicts. But in the world of open
+> source it's hard to think about it as a trade-off. You get obstacles and all
+> kinds of legal threats, even criminalisation of what is, in many ways, a
+> philanthropic enterprise. You get crypto wars and you get software patents
+> and you get copyrightable APIs. And you get nothing in return. Can you think
+> of a single case where law have helped you solve a problem you had in open
+> source land?
