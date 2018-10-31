@@ -1,7 +1,7 @@
 # Some settings for the output.
 output:
     basename: truing-stand
-    convert: mm  # Convert measurements to be more printer-friendly.
+    baseunit: mm  # Convert measurements to be more printer-friendly.
 
 # The tube size for your uprights.
 tube:
