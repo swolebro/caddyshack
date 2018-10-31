@@ -1,0 +1,96 @@
+# Some settings for the output.
+output:
+    basename: truing-stand
+    convert: mm  # Convert measurements to be more printer-friendly.
+
+# The tube size for your uprights.
+tube:
+    size: 1.0 in
+
+    # The inside measurement doesn't match what 1x1 14ga *should*
+    # be, but this is hot-rolled stuff, the the dimensions are
+    # imperfect to say the least. Plus, oversizing allows for some
+    # degree of press-fit.
+    inside: 0.86 in
+
+# The part that holds your skewer. Fits in/on tube above.
+bracket:
+    plug:
+        use: true   # Whether or not to add a the press-fit plug on bottom.
+
+        # Cross sectional sizes, **ratio** of tube.inside
+        # This defines a lead-in taper, then the press fit one.
+        bot: 96 %
+        mid: 98 %
+        top: 100 %
+
+        height: 0.5 in  # Overall height of the plug.
+        midheight: 20 %  # What ratio of plug.height is used for lead-in taper.
+
+        # Roundover for the corners.
+        fillet: 0.125 in
+
+    # Size for all pilot holes.
+    # These allow you to use sheet metal screws into the side of the plug
+    # or to screw in from the top into a wooden post instead.
+    # It's important that the screws have pilots, so the printer gives them
+    # solid wall to bite into, rather than mostly-hollow infill.
+    pilot: 0.125 in
+
+    # Thickness of the bottom and side part of the L bracket.
+    # Really should be no reason to change either of these.
+    bthick: 0.25 in
+    sthick: 0.25 in
+
+    # How much reinforcement to provide on the L, ratio of depth of L.
+    # And how wide to make the reinforcement fillets, inches.
+    # Shaving these down might help if you happen to have a very large
+    # skewer nut/quick release that can't clear them... Alternatively,
+    # you can shim under the nut/QR.
+    reinforce: 100 %
+    reinforce_thick: 0.10 in
+
+slider:
+    slack: 0.03 in # How much slack to give on the tube fitment.
+    thickness: 0.25 in  # Wall thickness.
+    height: 1.5 in # aking this approximately a cube looks nice.
+
+    # Captive nuts for thumbscrews to hold the slider in place while you work.
+    # If you wanted to get fancy, you could probably replace these with neodymium
+    # magnets. Make them self holding!
+    nut:
+        width: 0.48 in # for 1/4-20 nut, wrench size 7/16 + some slack
+        depth: 0.22 in
+
+    # Whether to design the holder for the rub indicator to be tapped or not.
+    # The alternative puts a slot for another captive nut instead.
+    tap: true
+
+    # Pilot hole to thread for rub indicator. Sized for 1/4-20 tap.
+    # If slider.tap == false, this will get upsized 10% for a clearance hole.
+    # Might need drilling afterwards to clean it up in either case.
+    pilot: 0.225 in
+
+# The actual part that contacts the rim.
+# Uses the slider.pilot measurement as well.
+indicator:
+    dia: 0.375 in
+    length: 0.75 in  # Overall length, round end included.
+
+
+# Spacers to fit the hub.
+# Also uses the tube.size from way above.
+spacer:
+    pilot: 0.4125 in  # Clearance for 3/8 threaded rod.
+    oncenter: 1.0 in  # The on-center distance between the holes.
+
+    # Did some napkin math for an assortment of good sizes.
+    # Account for hub width, width of the mount (that you stick in the vise)
+    # and symmetric spacers.
+    widths:
+        - 37.3 mm  # A pair of these, 1" wide mount = 100mm; common front hub.
+        - 15 mm    # Add these to reach 130mm; standard road rear hub.
+        - 17.5 mm  # To reach 135mm; standard mountain rear hub.
+
+        - 40.475 mm # If your mount is 3/4" wide, start with this for 100mm.
+        - 30.95 mm # If your mount is 1.5" wide, start with this to hit 100mm.
