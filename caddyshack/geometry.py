@@ -20,7 +20,7 @@ def circumscribe(n=6, *, side=None, apo=None, wrench=None):
     size, which is 2*apothem."""
 
     if wrench is not None:
-        if not n % 2:
+        if n % 2:
             raise Exception("wrench parameter invalid for uneven n (%d)" % n)
 
         apo = wrench/2
