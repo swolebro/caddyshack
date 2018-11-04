@@ -53,12 +53,13 @@ def build_bracket(dims):
                         .extrude(top)
                     )
 
-        bracket = bracket.cut(sidehole)
+        bracket = (bracket.cut(sidehole)
+                        .faces(">Z")
+                        .workplane()
+                    )
 
     # Now build the half above the plug.
-    bracket = (bracket.faces(">Z")
-                .workplane()
-                .box(dt.size, dt.size, db.bthick, centered=(1,1,0))
+    bracket = (bracket.box(dt.size, dt.size, db.bthick, centered=(1,1,0))
                 .faces(">Z")
                 .workplane()
                 .move(0, dt.size/2-db.sthick)
@@ -100,12 +101,23 @@ def build_bracket(dims):
     # Then I'll select the target edge to round off via some convoluted method.
     # I have no fucking clue why selector indexing refuses to pick it out.
     # And of course, a 100% fillet fails, so we got to settle for 99.9%.
-    bracket = (bracket.edges("|X")
-                .edges("not(>Y or <Y)")
-                .edges("not(>Z or <Z)")
-                .edges(">Z")
-                .fillet(min(0.999, db.reinforce) * (dt.size - db.sthick))
-               )
+
+    # And of fucking course x2, with this edge selection method, we got to use
+    # a different set of selectors depeneding on whether we're building this
+    # with the press-fit plug or not. Blarg.
+    if dbp.use:
+        bracket = (bracket.edges("|X")
+                    .edges("not(>Y or <Y)")
+                    .edges("not(>Z or <Z)")
+                    .edges(">Z")
+                  )
+    else:
+        bracket = (bracket.edges("|X")
+                    .edges("not(>Y or <Y)")
+                    .edges("<Z")
+                  )
+
+    bracket = bracket.fillet(min(0.999, db.reinforce) * (dt.size - db.sthick))
 
     # Then I'll cut the negative space out.
     bracket = bracket.cut(filletcutter)
@@ -143,7 +155,7 @@ def build_slider(dims):
                 .faces(">Y")
                 .workplane()
             )
-    ds.tap=False
+
     # If using the nut instead of a tap... make the relief for the nut, but don't cut it
     # until later, because otherwise fillets and edge selection will be a bitch and a half.
     if not ds.tap:
