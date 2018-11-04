@@ -51,15 +51,15 @@ bracket:
     reinforce_thick: 0.10 in
 
 slider:
-    slack: 0.03 in # How much slack to give on the tube fitment.
+    slack: 0.04 in # How much slack to give on the tube fitment.
     thickness: 0.25 in  # Wall thickness.
-    height: 1.5 in # aking this approximately a cube looks nice.
+    height: 1.5 in # Making this approximately a cube looks nice.
 
     # Captive nuts for thumbscrews to hold the slider in place while you work.
     # If you wanted to get fancy, you could probably replace these with neodymium
     # magnets. Make them self holding!
     nut:
-        width: 0.48 in # for 1/4-20 nut, wrench size 7/16 + some slack
+        width: 0.46 in # for 1/4-20 nut, wrench size 7/16 + some slack
         depth: 0.22 in
 
     # Whether to design the holder for the rub indicator to be tapped or not.
