@@ -1,0 +1,49 @@
+# Some settings for the output.
+output:
+    basename: boltknob
+    baseunit: mm  # Convert measurements to be more printer-friendly.
+
+# Eventually this script should read a full-blown CSV table (eg. with pandas)
+# instead of this silly file, so it could make *all* the knobs.
+
+# The set of bolts to make knobs for. Kinda just assuming hex caps for now. TODO.
+# dia and wrench are obvious. Cap refers to the cap height.
+# Fudge is a multiplicative fudge factor, tweakable for better fitment.
+bolts:
+    1/2:
+        dia: 0.5 in
+        wrench: 0.75 in
+        cap: 0.344 in
+        fudge: 3.5 %
+    3/8:
+        dia: 0.375 in
+        wrench: 0.5625 in
+        cap: 0.328 in
+        fudge: 3 %
+    1/4:
+        dia: 0.25 in
+        wrench: 0.4375 in
+        cap: 0.2188 in
+        fudge: 3 %
+
+
+# Some spec values for the knobs themselves.
+# These are kinda bullshit numbers based on guess-n-check. I doubt they'd
+# look nice universally for all bolts. But good enough for the ones above.
+knob:
+    points: 6  # Less pointed knobs, eg. 4 do fare better wih a lower roundoff.
+               # Otherwise it's practically just a rounded over square.
+
+    # Enforce a few limits, some absolute, some proportional.
+    limits:
+        support: 0.25 in  # Use *at most* this much support under the cap head.
+        roundover: 0.125 in  # Use *at most* this much roundover on the top surface.
+        height: 0.3125 in  # Use *at least* this much height.
+
+    # Try to make the target sizing fairly proportion-based.
+    size:
+        width: 350 %  # of bolt wrench size
+        height: 150 %  # of bolt cap height
+        roundover: 25 %  # roundover on top surface, as % of knob height.
+        roundoff: 99 %  # how rounded off to make the points. Note: 100% causes barfage.
+        support: 33 %  # of cap height
