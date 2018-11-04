@@ -55,7 +55,7 @@ def showsave(obj, dims, dest=None):
         # if you stripped the leading "# ", even the input and time entries.
         lines = ["#\n",
                  "# input: %s\n" % dims.file,
-                 "# time: %s" % datetime.datetime.utcnow(),
+                 "# time: %s\n" % datetime.datetime.utcnow(),
                  "#\n"]
         lines.extend("# " + line for line in  g.readlines())
         f.write(''.join(lines))
