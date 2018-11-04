@@ -1,8 +1,64 @@
 """Aggregating the crap from my CAD scripts into one massive shitpile."""
 
+import datetime
+import pathlib
 import yaml
+import os
+
+import FreeCADGui
+import FreeCAD
+import Helpers
+import Mesh
 
 from . import geometry
+
+def clear():
+    """Close all FreeCAD GUI tabs."""
+
+    for x in FreeCAD.listDocuments():
+        FreeCAD.closeDocument(x)
+
+def pretty(obj=None):
+    """Show the active FreeCAD GUI tab axonometric, and sized to fit."""
+
+    if obj:
+        Helpers.show(obj)
+
+    FreeCADGui.activeDocument().activeView().viewAxonometric()
+    FreeCADGui.SendMsgToActiveView("ViewFit")
+
+def showsave(obj, dims, dest=None):
+    """Save the object to dest. Append the dims as a comment in the file for future
+    reference."""
+
+    name = obj.val().label
+    doc = FreeCAD.newDocument(name)
+    Helpers.show(obj)
+    pretty()
+
+    if dest is None:
+        # Yeah, yeah, __file__ is bad. TODO.
+        dest = pathlib.Path(__file__).parent.parent / 'export'
+
+    if os.path.isdir(dest):
+        dest = os.path.join(dest,'%s-%s.obj' % (dims.output.basename, name))
+
+    Mesh.export(doc.Objects, str(dest))
+
+    # Save the entire input file to the end of the gcode as a comment.
+    # Save the input file, as opposed to the object in memory, since any
+    # changes to the object after reading should be consistent from run to
+    # run anyway.
+    with open(dest, 'a') as f, open(dims.file) as g:
+
+        # By chance, these lines could actually be read back in as YAML
+        # if you stripped the leading "# ", even the input and time entries.
+        lines = ["#\n",
+                 "# input: %s\n" % dims.file,
+                 "# time: %s" % datetime.datetime.utcnow(),
+                 "#\n"]
+        lines.extend("# " + line for line in  g.readlines())
+        f.write(''.join(lines))
 
 class Dims(dict):
     """A deserialization of a YAML file that's . and [] access
@@ -52,6 +108,7 @@ class Dims(dict):
         """
 
         self.__dict__ = self
+        self.file = file
 
         if file:
             obj = yaml.load(open(file))

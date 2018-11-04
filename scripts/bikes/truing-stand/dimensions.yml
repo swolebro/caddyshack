@@ -24,7 +24,7 @@ bracket:
         mid: 98 %
         top: 100 %
 
-        height: 0.5 in  # Overall height of the plug.
+        height: 0.75 in  # Overall height of the plug.
         midheight: 20 %  # What ratio of plug.height is used for lead-in taper.
 
         # Roundover for the corners.
@@ -39,8 +39,8 @@ bracket:
 
     # Thickness of the bottom and side part of the L bracket.
     # Really should be no reason to change either of these.
-    bthick: 0.25 in
-    sthick: 0.25 in
+    bthick: 0.1875 in
+    sthick: 0.1875 in
 
     # How much reinforcement to provide on the L, ratio of depth of L.
     # And how wide to make the reinforcement fillets, inches.
