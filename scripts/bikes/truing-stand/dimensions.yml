@@ -67,9 +67,11 @@ slider:
     tap: true
 
     # Pilot hole to thread for rub indicator. Sized for 1/4-20 tap.
-    # If slider.tap == false, this will get upsized 10% for a clearance hole.
+    # If slider.tap == false, then clearance will be used instead.
     # Might need drilling afterwards to clean it up in either case.
+    # Clearance diameter is always used for the retaining nuts.
     pilot: 0.225 in
+    clearance: 0.25 in
 
 # The actual part that contacts the rim.
 # Uses the slider.pilot measurement as well.

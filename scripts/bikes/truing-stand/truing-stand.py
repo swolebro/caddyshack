@@ -92,7 +92,8 @@ def build_bracket(dims):
 
                     # The hub is what sits inside the V, not the skewer, so the fillet here
                     # not a critical dimension, so long as it is tighter than a bike dropout.
-                    .edges("|Y and <Z").fillet(offs/8)
+                    # Having it excessively tight makes the part weaker though. Eh.
+                    .edges("|Y and <Z").fillet(offs/4)
                 )
 
 
@@ -117,7 +118,82 @@ def build_bracket(dims):
 
 
 def build_slider(dims):
-    pass
+    ds = dims.slider
+    dt = dims.tube
+
+    outside = dt.size + 2*ds.thickness
+    inside = dt.size + ds.slack
+    nut = cs.geometry.circumscribe(wrench=ds.nut.width)
+
+    slider = (cq.Workplane("XY")
+                .rect(outside, outside)
+                .extrude(outside)
+                .edges("|Z")
+                .fillet(dims.bracket.plug.fillet)
+                .faces(">Z")
+                .workplane()
+                .rect(inside, inside)
+                .cutThruAll()
+             )
+
+    # Holder for the rub indicator.
+    cross = (slider.faces("<X")
+                .workplane()
+                .box(outside/2, ds.pilot*2.5, ds.pilot*2.5 ,centered=(1,1,0), combine=0)
+                .faces(">Y")
+                .workplane()
+            )
+    ds.tap=False
+    # If using the nut instead of a tap... make the relief for the nut, but don't cut it
+    # until later, because otherwise fillets and edge selection will be a bitch and a half.
+    if not ds.tap:
+        ds.pilot = ds.clearance
+        tapnut = cross.polygon(6, nut).extrude(-ds.nut.depth, combine=False)
+
+    cross = (cross
+                .hole(ds.pilot)
+                .edges("<X and |Y")
+                .fillet(ds.pilot)
+            )
+
+    points = [(-outside/4,0),(outside/4,0)]
+    slider = (slider.faces("<Y")
+                .workplane()
+                .transformed((0,90,0))
+                .pushPoints(points)
+                .circle(nut/2)
+                .extrude(ds.nut.depth/3)
+                .faces("<Y[3]")
+                .edges()
+                .fillet(min(ds.nut.depth/3*0.99, (outside/2-nut)/4*0.99))
+              )
+
+    slider = (slider.faces("<Y[2]")
+                .workplane()
+                .transformed((0,90,0))
+                .pushPoints(points)
+                .polygon(6, nut)
+                .cutBlind(-ds.nut.depth)
+              )
+
+    slider = (slider.faces("<Y")
+                .workplane()
+                .transformed((0,90,0))
+                .pushPoints(points)
+                .hole(ds.clearance, ds.thickness*2)
+              )
+
+    slider=slider.union(cross)
+    slider=slider.faces(">Z[-3]").edges("|Y").fillet(ds.pilot)
+    slider=slider.faces("<Z[-3]").edges("|Y").fillet(ds.pilot)
+
+    # Finally time to cut the holder for this nut. Retain with super glue, duh.
+    if not ds.tap:
+        slider = slider.cut(tapnut)
+
+    return slider
+
+
 
 def build_indicator(dims):
     x = dims.indicator
@@ -157,7 +233,7 @@ def build_spacer(dims, width):
 if __name__ == "__cq_freecad_module__":
     dims = cs.Dims('scripts/bikes/truing-stand/dimensions.yml')
 
-    names = ['bracket', 'indicator']
+    names = ['bracket', 'indicator', 'slider']
     for name in names:
         obj = globals()["build_" + name](dims) # oh god
         obj.val().label = name
@@ -173,4 +249,5 @@ if __name__ == "__cq_freecad_module__":
         import FreeCAD
         FreeCAD.closeDocument(FreeCAD.ActiveDocument.ActiveObject.Label)
     else:
+        FreeCAD.newDocument(obj.val().label)
         cs.pretty(obj) # But would be nice to see one.
