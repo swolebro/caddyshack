@@ -108,7 +108,8 @@ class Dims(dict):
         """
 
         self.__dict__ = self
-        self.file = file
+        if file is not None:
+            self.file = file
 
         if file:
             obj = yaml.load(open(file))

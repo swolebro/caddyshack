@@ -81,8 +81,9 @@ indicator:
 # Spacers to fit the hub.
 # Also uses the tube.size from way above.
 spacer:
-    pilot: 0.4125 in  # Clearance for 3/8 threaded rod.
+    pilot: 0.38 in  # Clearance for 3/8 threaded rod.
     oncenter: 1.0 in  # The on-center distance between the holes.
+    fillet: 2 mm      # Round the edges for easier fitment.
 
     # Did some napkin math for an assortment of good sizes.
     # Account for hub width, width of the mount (that you stick in the vise)

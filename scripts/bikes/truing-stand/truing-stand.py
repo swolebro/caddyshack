@@ -105,7 +105,7 @@ def build_bracket(dims):
                 .edges(">Z")
                 .fillet(min(0.999, db.reinforce) * (dt.size - db.sthick))
                )
-    cs.Helpers.show(filletcutter)
+
     # Then I'll cut the negative space out.
     bracket = bracket.cut(filletcutter)
     bracket = bracket.cut(veecutter)
@@ -136,14 +136,41 @@ def build_indicator(dims):
     return indicator
 
 
-def build_spacer(dims):
-    pass
+def build_spacer(dims, width):
+    d = dims.spacer
+    spacer = (cq.Workplane("XY")
+                .rect(dims.tube.size, d.oncenter*2)
+                .extrude(width)
+                .faces(">Z")
+                .workplane()
+                .pushPoints([(0,d.oncenter/2), (0,-d.oncenter/2)])
+                .hole(d.pilot)
+                .edges("|Z")
+                .fillet(d.pilot)
+                .edges("not(|Z)")
+                .fillet(d.fillet)
+               )
+    return spacer
 
+# Do I even want to test for this? Will require refactoring later
+# when I get this stuff running outside of FreeCAD. TODO.
+if __name__ == "__cq_freecad_module__":
+    dims = cs.Dims('scripts/bikes/truing-stand/dimensions.yml')
 
-dims = cs.Dims('scripts/bikes/truing-stand/dimensions.yml')
+    names = ['bracket', 'indicator']
+    for name in names:
+        obj = globals()["build_" + name](dims) # oh god
+        obj.val().label = name
+        cs.showsave(obj, dims)
 
-names = ['bracket']
-for name in names:
-    obj = globals()["build_" + name](dims) # oh god
-    obj.val().label = name
-    cs.showsave(obj, dims)
+    # This is one example of where the list->dict conversion rears its head. Blarg.
+    for width in dims.spacer.widths.values():
+        obj = build_spacer(dims, width)
+        obj.val().label = "spacer-%d" % width
+        doc = cs.showsave(obj, dims)
+
+        # Hack. Because we don't need to see *all* the spacers.
+        import FreeCAD
+        FreeCAD.closeDocument(FreeCAD.ActiveDocument.ActiveObject.Label)
+    else:
+        cs.pretty(obj) # But would be nice to see one.
