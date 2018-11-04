@@ -20,9 +20,9 @@ bracket:
 
         # Cross sectional sizes, **ratio** of tube.inside
         # This defines a lead-in taper, then the press fit one.
-        bot: 96 %
+        bot: 94 %
         mid: 98 %
-        top: 100 %
+        top: 99 %
 
         height: 0.75 in  # Overall height of the plug.
         midheight: 20 %  # What ratio of plug.height is used for lead-in taper.
@@ -39,8 +39,8 @@ bracket:
 
     # Thickness of the bottom and side part of the L bracket.
     # Really should be no reason to change either of these.
-    bthick: 0.1875 in
-    sthick: 0.1875 in
+    bthick: 0.25 in
+    sthick: 0.25 in
 
     # How much reinforcement to provide on the L, ratio of depth of L.
     # And how wide to make the reinforcement fillets, inches.
@@ -83,7 +83,7 @@ indicator:
 # Spacers to fit the hub.
 # Also uses the tube.size from way above.
 spacer:
-    pilot: 0.38 in  # Clearance for 3/8 threaded rod.
+    pilot: 0.40 in  # Clearance for 3/8 threaded rod.
     oncenter: 1.0 in  # The on-center distance between the holes.
     fillet: 2 mm      # Round the edges for easier fitment.
 
