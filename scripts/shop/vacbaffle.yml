@@ -1,0 +1,59 @@
+# Some settings for the output.
+output:
+    basename: vacbaffle
+    baseunit: mm  # Convert measurements to be more printer-friendly.
+
+# Sketch out the dimensions of the bucket so we can cut the curve from
+# our inlet adapter more easily.
+bucket:
+    height: 14.5 in
+    topdia: 11.875 in # outside measurement, but roughly guesstimating to exclude the lip
+    botdia: 10.25 in
+    thick: 0.1 in
+
+inlet:
+    thick: 0.4 in # thickness of the outside wall
+    pilot: 0.125 in # for mounting screws
+    pdepth: 0.35 in
+
+    flange:
+        height: 3 in
+        offset: 0.5 in  # from the top of the bucket - determines what diameters to cut in it
+    fitting:
+        max: 2.280 in
+        min: 2.245 in
+        length: 0.75 in
+
+    clip:
+        width: 0.85 in  # to fit a 3/4" tab that's on top of the hose fitting
+        depth: 1.25 in # how far in should the notch go
+        leave: 0.125 in # how much meat to leave above the hose fitting
+        catch: 0.1875 in # how much of a lip to leave for hose clip to hook onto
+
+outlet:
+    thick: 0.125 in # general part thickness
+
+    flange:
+        dia:  3.0 in
+        boltcirc: 2.5 in
+        pilot: 0.250 in # drill clean to fit 1/4" bolt
+                        # should put some backing material on inside and caulk on the joint itself
+    fitting:
+        max: 1.780 in
+        min: 1.730 in
+        length: 1.5 in
+
+
+# Support for the baffle sheet.
+# Probably want 3 or 4 of these. They won't be supporting too much load though.
+support:
+    height: 0.75 in
+    width: 0.5 in
+    depth: 0.375 in
+    pilot: 0.125 in
+
+    offset: 3.5 in   # How far down from the top of the bucket you want the supports to be.
+                     # You gotta kinda guesstimate based on the final height of the inlet
+                     # and the thickness of your baffle sheet. But this isn't super critical
+                     # because this setting only adjusts the outer radius to make it fit the
+                     # bucket better,
