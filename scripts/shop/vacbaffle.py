@@ -1,5 +1,4 @@
-"""This makes a couple components for a Thein baffle dust collector,
-using a standard 5 gallon bucket and 1-7/8" shopvac hose."""
+"""This makes a couple components for a Thien baffle dust collector."""
 
 
 import cadquery as cq
@@ -18,7 +17,15 @@ def build_outlet(dims):
                 .polygon(3, do.flange.boltcirc,forConstruction=True)
                 .vertices()
                 .hole(do.flange.pilot)
+            )
+
+    washer = (base.translate((0,0,0))  # copy hack
                 .faces(">Z")
+                .workplane()
+                .hole(do.fitting.min)
+              )
+
+    base = (base.faces(">Z")
                 .workplane()
                 .circle(do.fitting.max/2 + do.thick)
                 .extrude(do.fitting.length - do.thick)
@@ -56,26 +63,28 @@ def build_outlet(dims):
                 .loft()
             )
 
-    return base.cut(taper)
+    return base.cut(taper), washer
 
 def build_inlet(dims):
     di = dims.inlet
     db = dims.bucket
 
-
+    # Find the top radius we need to cut.
     rhi = db.topdia/2 - db.slope*di.flange.offset
-    rlo = db.topdia/2 - db.slope*(di.flange.offset+di.flange.height)
-
     ang = math.acos((rhi-di.fitting.max)/rhi)
     length = rhi*math.sin(ang)
 
+    # Quick check to see if this will clearly fit in the print bed...
     L = di.fitting.length+length+di.thick
     W = di.fitting.max+di.thick*2
     H = di.fitting.max + 2*di.thick
-
-    # Quick check to see if this will clearly fit in the print bed...
     print("Approximate size of inlet print:")
     print("%.2f x %.2f x %2.f" %(L,W,H))
+
+    # Now find the bottom radius too.
+    rlo = db.topdia/2 - db.slope*(di.flange.offset+H)
+
+
 
     inlet = (cq.Workplane("XY")
                 .move(-di.thick, -di.thick)
@@ -122,12 +131,10 @@ def build_inlet(dims):
     # We'll loop over a couple angles and heights and make a rotate workplane
     # that's been displaced to where the center of the bucket was. Then we'll
     # extrude cylinders past that which we can later cut from the inlet.
-    # This might leave a nick or two in the middle, but whatever. I'm not going
-    # to write loop to only loop the outside screw holes.
     pilots = []
     adj = math.asin(di.thick/(2*rlo))
     for angle in [-adj, ang/3, 2*ang/3, ang+adj]:
-        for h in [di.thick/2, H/2, H-di.thick/2]:
+        for h in [di.thick/2, H-di.thick/2]:
 
             p = (cq.Workplane("XZ")
                     .workplane(offset=rhi - di.fitting.max)
@@ -195,10 +202,18 @@ if __name__ == "__cq_freecad_module__":
     # Some calculated dimensions.
     dims.bucket.slope = (dims.bucket.topdia - dims.bucket.botdia)/(2*dims.bucket.height)
 
+    # Applying fudge factors.
+    dims.outlet.fitting.max += dims.outlet.fitting.fudge
+    dims.outlet.fitting.min += dims.outlet.fitting.fudge
+    dims.inlet.fitting.max += dims.inlet.fitting.fudge
+    dims.inlet.fitting.min += dims.inlet.fitting.fudge
 
-    obj  = build_outlet(dims)
-    obj.val().label = "outlet"
-    cs.showsave(obj, dims)
+
+    outlet, washer  = build_outlet(dims)
+    outlet.val().label = "outlet"
+    cs.showsave(outlet, dims)
+    washer.val().label = "outlet-washer"
+    cs.showsave(washer, dims)
 
     obj = build_inlet(dims)
     obj.val().label = "inlet"

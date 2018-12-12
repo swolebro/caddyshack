@@ -1,6 +1,6 @@
 # Some settings for the output.
 output:
-    basename: vacbaffle
+    basename: vacbaffle-1.875
     baseunit: mm  # Convert measurements to be more printer-friendly.
 
 # Sketch out the dimensions of the bucket so we can cut the curve from
@@ -11,46 +11,59 @@ bucket:
     botdia: 10.25 in
     thick: 0.1 in
 
+# This is the inlet to the Thien baffle.
+# Be forewarned that even the base size pushes the bounds of my 3D printer.
 inlet:
     thick: 0.4 in # thickness of the outside wall
-    pilot: 0.125 in # for mounting screws
-    pdepth: 0.35 in
+    pilot: 0.11 in # clean up with a 7/64 bit and use #6 mounting screws
+    pdepth: 0.35 in # depth of the pilot
 
     flange:
-        height: 3 in
-        offset: 0.5 in  # from the top of the bucket - determines what diameters to cut in it
+        offset: 0.5 in  # from the top of the bucket
+                        # determines what diameters to cut in it
+
     fitting:
+        # These measurements are from the tapered fitting at the vacuum end of
+        # a hose.
         max: 2.280 in
         min: 2.245 in
         length: 0.75 in
 
+        fudge: 0.04 in   # How much clearance do we add? This is really a function of
+                        # how accurate your printer is, how fine your settings are,
+                        # and what material you're printing with.
+
     clip:
-        width: 0.85 in  # to fit a 3/4" tab that's on top of the hose fitting
+        width: 0.85 in # to fit a 3/4" tab that's on top of the hose fitting
         depth: 1.25 in # how far in should the notch go
-        leave: 0.125 in # how much meat to leave above the hose fitting
-        catch: 0.1875 in # how much of a lip to leave for hose clip to hook onto
+        leave: 0.10 in # how much meat to leave above the hose fitting
+        catch: 0.1 in # how much of a lip to leave for hose clip to hook onto
 
 outlet:
     thick: 0.125 in # general part thickness
 
     flange:
-        dia:  3.0 in
-        boltcirc: 2.5 in
+        dia:  4.0 in  # diameter of base
+        boltcirc: 3.0 in  # diameter of bolt circle
         pilot: 0.250 in # drill clean to fit 1/4" bolt
-                        # should put some backing material on inside and caulk on the joint itself
+                        # this will also make a backing washer you can print
+                        # don't forget to caulk on the joint itself
     fitting:
-        max: 1.780 in
-        min: 1.730 in
+        # These measurements come off the tapered fitting at the business
+        # end of a hose.
+        max: 1.78 in
+        min: 1.73 in
         length: 1.5 in
 
+        fudge: 0.03 in  # And again, how much clearance do we give it?
 
 # Support for the baffle sheet.
 # Probably want 3 or 4 of these. They won't be supporting too much load though.
 support:
-    height: 0.75 in
-    width: 0.5 in
-    depth: 0.375 in
-    pilot: 0.125 in
+    height: 1.0 in
+    width: 0.75 in
+    depth: 0.5 in
+    pilot: 0.11 in  # Again, drill out 7/64" and use #6 screws.
 
     offset: 3.5 in   # How far down from the top of the bucket you want the supports to be.
                      # You gotta kinda guesstimate based on the final height of the inlet
