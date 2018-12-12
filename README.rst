@@ -103,6 +103,25 @@ other people needing to be able to run my code verbatim anyway. I'm just
 putting it up here for you to have examples - an addendum to those provided
 in the CadQuery docs.
 
+Also, one super-duper pro-tip... FreeCAD can be finnicky with a few operations,
+particularly fillets. Things will crash occasionally - open source software,
+right?  It's not professional, but you get a hell of a lot more than you pay
+for and it saves you from being shafted by ever-changing license requirements
+on SAS CAD products. Anyway, each time you run a script through the CadQuery
+plugin, a copy of the file is saved to ``/tmp``. So, this line of bash will
+take the latest tempfile and put it into your clipboard, so when you reopen
+your script, you can just paste the contents over and carry on where you left
+off:
+
+.. code-block:: bash
+
+    ls -tc /tmp/tmp* | head -1 | xargs xclip -selection clipboard
+
+Additionally, if you find yourself making changes that break something in the
+course of a work session (where you don't have multiple commits snapshotting
+each change), looking to the tempfiles can help you track where you botched it
+up.
+
 Printed Parts
 -------------
 
