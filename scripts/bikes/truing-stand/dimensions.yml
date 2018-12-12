@@ -91,9 +91,17 @@ spacer:
     # Account for hub width, width of the mount (that you stick in the vise)
     # and symmetric spacers.
     widths:
-        - 37.3 mm  # A pair of these, 1" wide mount = 100mm; common front hub.
-        - 15 mm    # Add these to reach 130mm; standard road rear hub.
+        - 40.475 mm # If your mount is 3/4" wide, start with this for 100mm.
+        - 37.3 mm  # If your mount is 1" wide, start with this for 100m.
+        - 30.95 mm # If your mount is 1.5" wide, start with this for 100mm.
+
+        - 15.0 mm  # Add these to reach 130mm; standard road rear hub.
         - 17.5 mm  # To reach 135mm; standard mountain rear hub.
 
-        - 40.475 mm # If your mount is 3/4" wide, start with this for 100mm.
-        - 30.95 mm # If your mount is 1.5" wide, start with this to hit 100mm.
+        # Just more generic widths to fit whatever the fuck bike "standard"
+        # your bike might be.
+        - 2.00 mm
+        - 2.50 mm
+        - 3.00 mm
+        - 5.00 mm
+        - 10.00 mm
