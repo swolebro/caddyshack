@@ -30,6 +30,7 @@ standoff:
     toe:
         narrow: 0.10 in
         wide: 0.20 in
+        xwide: 0.30 in
 
 # May as well make some wire clamps while I'm at it.
 wireclamp:

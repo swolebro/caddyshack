@@ -1,4 +1,4 @@
-""""""
+"""Standoffs for screwing PCB's in place on the workbench for prototyping."""
 
 import urllib
 
@@ -64,7 +64,7 @@ if __name__ == "__cq_freecad_module__":
     for tname, toe in ds.toe.items():
         for hname, height in ds.heights.items():
             # First build the bottom part:
-            standoff = build_standoff(toe, height, ds.thick, hbuffer, dims.pilot, None)
+            standoff = build_standoff(toe, height, ds.thick, hbuffer, dims.clearance, None)
             standoff.val().label = "%s-%s" % (tname, hname)
             cs.showsave(standoff, dims)
 
