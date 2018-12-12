@@ -1,0 +1,49 @@
+# Some settings for the output.
+output:
+    basename: standoff
+    baseunit: mm  # Convert measurements to be more printer-friendly.
+
+# These are just little stand-alone standoffs that let you affix PCB's
+# by their corners. The idea is to screw them into a scrap piece of
+# plywood or 2x4 just for testing things.
+
+# Later, I'll build on this to make a script for actual enclosures.
+
+# Hole dimensions. Target using #8 screws because I got loads of them.
+clearance: 0.1875 in
+pilot: 0.125 in
+countersunk: 0.2830 in  # make false-y to disable countersinking.
+
+standoff:
+    # Thickness of the board to be held.
+    # Boards I checked all seemed to be about 1/16" thick.
+    # Even if this is a bit too much or too little, it's not super critical.
+    thick: 0.0625 in
+
+    # How high the bottom of the PCB sits off the wood board.
+    heights:
+        short: 0.125 in
+        medium: 0.25 in
+        tall: 0.5 in
+
+    # How much of the corner of the board does it cover.
+    toe:
+        narrow: 0.10 in
+        wide: 0.20 in
+
+# May as well make some wire clamps while I'm at it.
+wireclamp:
+
+    # Target wire outside diameter.
+    xs: 0.03 in
+    s: 0.05 in
+    m: 0.1 in
+    l: 0.15 in
+    xl: 0.2 in
+
+    width: 0.375 in  # Width of the clamp area. Screws add more.
+
+    # Also generate bases in each of the standoff heights.
+    # These will let you suspend the clamps above the wood board
+    # at the same height as the PCB boards (redundant board board).
+    bases: true
