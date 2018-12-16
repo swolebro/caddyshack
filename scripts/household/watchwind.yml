@@ -1,0 +1,16 @@
+# Some settings for the output.
+output:
+    basename: watchwind
+    baseunit: mm  # Convert measurements to be more printer-friendly.
+
+mount:
+    dia: 0.25 in  # Fit what size motor shaft.
+    length: 0.5 in  # Depth of bore for the shaft.
+
+holder:
+    width: 0.75 in
+    length: 5.0 in
+
+thick: 0.25 in
+pilot: 0.1 in  # Use this to make holes for the zip ties and a hole you can
+               # tap for a grub screw to anchor to the motor shaft.

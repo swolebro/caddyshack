@@ -1,0 +1,19 @@
+; This is some stupid gcode for controlling the watch winder stepper via LinuxCNC.
+; At some point, I'll probably redo this to be an Arduino sketch using one of those
+; chintzy servos, but for the time being, I don't have any of them on hand, while I
+; do have a LinuxCNC box and way overpowered stepper sitting right in front of me.
+
+; And now my watch is charged for six months anyway... so consider this can kicked.
+
+; The positions are picked as being about 2/3 of a rev if I home the axis with
+; the winder horizontal. I just do 30k revs at a time because why not.
+
+#100 = 0
+o200 do
+#100 = [#100 + 1]
+G0 F35 Y0.9
+G4 P0.2
+G0 F35 Y2.1
+G4 P0.2
+o200 while[#100 LE 30000]
+M02
