@@ -3,6 +3,7 @@
 import datetime
 import pathlib
 import yaml
+import re
 import os
 
 import FreeCADGui
@@ -41,7 +42,7 @@ def showsave(obj, dims, dest=None):
         dest = pathlib.Path(__file__).parent.parent / 'export'
 
     if os.path.isdir(dest):
-        dest = os.path.join(dest,'%s-%s.obj' % (dims.output.basename, name))
+        dest = os.path.join(dest,'%s%s.obj' % (dims.output.basename, '-'+name if name else ''))
 
     Mesh.export(doc.Objects, str(dest))
 
@@ -72,9 +73,11 @@ class Dims(dict):
         strings unchanged and percentages in their decimal form.
         """
 
-        val, _, unit = s.partition(' ')
-        if unit not in ['in', 'mm', '%']:
+        match = re.search(r'([\d.]+)\s*(\w*)', s)
+        if match is None or match.group(2) not in ['in', 'mm', '%']:
             return s
+
+        val, unit = match.groups()
 
         val = float(val)
         if unit == '%':
