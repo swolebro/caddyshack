@@ -73,7 +73,7 @@ class Dims(dict):
         strings unchanged and percentages in their decimal form.
         """
 
-        match = re.search(r'([\d.]+)\s*(\w*)', s)
+        match = re.search(r'([\d.]+)\s*(\S*)', s)
         if match is None or match.group(2) not in ['in', 'mm', '%']:
             return s
 
