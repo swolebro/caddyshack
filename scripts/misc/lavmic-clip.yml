@@ -1,0 +1,48 @@
+# Dimensions and such.
+
+# I spec'd these out to fit my Giant Squid lav mic, and fit a
+# steel collar stay for the magnetic back (superglued into place).
+# Printed in fine mode on PLA. Really shouldn't matter too much.
+
+output:
+    basename: lavmic-clip
+    baseunit: mm  # Convert measurements to be more printer-friendly.
+
+base:
+    # Dimensions for the base.
+    # Thinner is better, holding the microphone closer to you, where
+    # it's less inclined to wobble around.
+    width: 0.4 in
+    length: 2.0 in
+    thick: 0.0625 in
+
+    fillet: 0.1 in # Round the corners to make it look nice
+
+lav:
+    # These dimensions have more to do with where to place the mic
+    # and how to hold it than the dimensions of the mic itself.
+    # Here we define the block that will hold the mic.
+    width: 0.4 in
+    length: 0.5 in
+    height: 0.45 in
+    fillet: 0.0625 in
+    position: 33 %  # From center, relative to the overall length of the base.
+
+    # And this is the hole for it. So this actually depends on the mic.
+    # It'll be given a slight taper for a better press fit.
+    hole: 0.26 in
+    taper: 3 %  # Make the diameter this much larger at the start.
+
+wire:
+    # Likewise, the block to hold the wire is really sized to taste.
+    width: 0.2 in
+    length: 0.5 in
+    height: .4 in
+    fillet: 0.0625 in
+    position: 33 %  # From center, relative to the overall length of the base.
+
+    slot:
+        # But the width the slot (and to some extent, depth) determine how well
+        # it'll grab the audio cable. So measure that out.
+        width: 0.085 in
+        depth: 0.3 in
