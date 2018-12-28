@@ -1,6 +1,23 @@
-# Some settings for the output.
+# Dimensions to fit a 2.5" Ridgid brand shop vac hose.
+
+# As seen here:
+# Thingiverse (TODO, but smaller holse is here: https://www.thingiverse.com/thing:3277907)
+# https://www.youtube.com/watch?v=Evu_HuDse4M
+
+# I did these prints on high speed with a Lulzbot Mini and eSun ABS+.
+# For different printers or materials, you might need to increase or
+# decrease the "fudge" factors slightly, to account for different levels
+# of imprecision.
+
+# The Thingiverse page has object files from these parameters, plus
+# a XS, S, L, and XL degrees of slop (each tweaked in increments of
+# 0.02") and small sample prints you can do to check which fits a
+# given machine/filament combo best. There are also some photos of the
+# hose itself, so you can sanity-check that you're printing for the right
+# thing.
+
 output:
-    basename: vacbaffle-2.5
+    basename: vacbaffle-2.5/vacbaffle-2.5
     baseunit: mm  # Convert measurements to be more printer-friendly.
 
 # Sketch out the dimensions of the bucket so we can cut the curve from

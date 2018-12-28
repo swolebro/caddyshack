@@ -1,4 +1,21 @@
-"""This makes a couple components for a Thien baffle dust collector."""
+"""These are the main components of a Thien baffle dust collector for a
+shopvac. You'll need to BYOBucket and some material to make the baffle itself.
+
+This script will use the dimensions in "vacbaffle.yml" - since I've come up
+with profiles for a couple different hoses, you have to copy or (better) symlink
+to pick which one to use.
+
+This script will display on the debug console the envelope of the inlet (what
+should be the biggest component), so check that to make sure it'll fit your
+printer before bothering to load the OBJ into your slicer. If it's too big,
+make some adjustments.
+
+It'll also display roughly what diameter your baffle should be, given the other
+paramters. Make a mental note of this for later, when you fabricate that.
+
+For further information on printing, assembly, and use, see the video here:
+https://www.youtube.com/watch?v=Evu_HuDse4M
+"""
 
 
 import cadquery as cq
@@ -163,7 +180,7 @@ def build_support(dims):
     rlo = db.topdia/2 - dims.bucket.slope*(ds.offset + ds.height)
 
     # Need to know this dimension for cutting the baffle sheet.
-    print("Bucket diameter at baffle height: ", rhi)
+    print("Bucket diameter at baffle height: ", rhi*2)
 
     support = (cq.Workplane("XY")
                     .move(0, -ds.depth/2)

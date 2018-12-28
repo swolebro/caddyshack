@@ -1,0 +1,3 @@
+# Make this a symlink for selecting which profile to actually print.
+# Gross hack because I'm pretty sure FreeCAD/CADQuery scripts can't take arguments.
+vacbaffle.yml
