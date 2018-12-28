@@ -1,0 +1,94 @@
+# Dimensions to fit a 2.5" Dustless brand shop vac hose.
+
+# This one is slightly different from the Ridgid in both the dimensions, and in
+# that it has the same size male fitting on both ends. The Ridgid one, in
+# contrast, has male fittings on both ends, but the end where you attach your
+# tool is smaller, and the end nearer to the vacuum is larger and has a clip
+# (as well as an internal taper that could fit the tool end in it as well).
+
+# As seen here:
+# Thingiverse (TODO, but smaller holse is here: https://www.thingiverse.com/thing:3277907)
+# https://www.youtube.com/watch?v=Evu_HuDse4M
+
+# I did these prints on high speed with a Lulzbot Mini and eSun ABS+.
+# For different printers or materials, you might need to increase or
+# decrease the "fudge" factors slightly, to account for different levels
+# of imprecision.
+
+# The Thingiverse page has object files from these parameters, plus
+# a XS, S, L, and XL degrees of slop (each tweaked in increments of
+# 0.02") and small sample prints you can do to check which fits a
+# given machine/filament combo best. There are also some photos of the
+# hose itself, so you can sanity-check that you're printing for the right
+# thing.
+
+output:
+    basename: vacbaffle-dustless-2.5/vacbaffle-dustless-2.5
+    baseunit: mm  # Convert measurements to be more printer-friendly.
+
+# Flag to turn on a couple of extra prints you can use for test fitting.
+debug: true
+
+# Sketch out the dimensions of the bucket so we can cut the curve from
+# our inlet adapter more easily.
+bucket:
+    height: 14.5 in
+    topdia: 11.875 in # outside measurement, but roughly guesstimating to exclude the lip
+    botdia: 10.25 in
+    thick: 0.1 in
+
+# This is the inlet to the Thien baffle.
+# Be forewarned that even the base size pushes the bounds of my 3D printer.
+inlet:
+    thick: 0.4 in # thickness of the outside wall
+    pilot: 0.11 in # clean up with a 7/64 bit and use #6 mounting screws
+    pdepth: 0.35 in # depth of the pilot
+
+    flange:
+        offset: 0.5 in  # from the top of the bucket
+                        # determines what diameters to cut in it
+
+    fitting:
+        # These measurements are from the tapered fitting at the vacuum end of
+        # a hose.
+        max: 2.315 in
+        min: 2.26 in
+        length: 0.75 in
+
+        fudge: 0.03 in   # How much clearance do we add? This is really a function of
+                        # how accurate your printer is, how fine your settings are,
+                        # and what material you're printing with.
+
+    clip: false # Don't add a clip at all.
+
+outlet:
+    thick: 0.125 in # general part thickness
+
+    flange:
+        dia:  4.0 in  # diameter of base
+        boltcirc: 3.25 in  # diameter of bolt circle
+        pilot: 0.250 in # drill clean to fit 1/4" bolt
+                        # this will also make a backing washer you can print
+                        # don't forget to caulk on the joint itself
+    fitting:
+        # These measurements come off the tapered fitting at the business
+        # end of a hose.
+        max: 2.347 in
+        min: 2.240 in
+        length: 1.50 in
+
+        fudge: 0.03 in  # And again, how much clearance do we give it?
+
+# Support for the baffle sheet.
+# Probably want 3 or 4 of these. They won't be supporting too much load though.
+support:
+    height: 1.0 in
+    width: 0.75 in
+    depth: 0.5 in
+    pilot: 0.11 in  # Again, drill out 7/64" and use #6 screws.
+
+    offset: 4.0 in   # How far down from the top of the bucket you want the supports to be.
+                     # You gotta kinda guesstimate based on the final height of the inlet
+                     # and the thickness of your baffle sheet. But this isn't super critical
+                     # because this setting only adjusts the outer radius to make it fit the
+                     # bucket better,
