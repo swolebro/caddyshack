@@ -30,7 +30,7 @@ inlet:
                         # bit shorter so it actually fits my print bed.
         length: 0.75 in
 
-        fudge: 0.04 in   # How much clearance do we add? This is really a function of
+        fudge: 0.03 in   # How much clearance do we add? This is really a function of
                         # how accurate your printer is, how fine your settings are,
                         # and what material you're printing with.
 
