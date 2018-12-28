@@ -1,6 +1,6 @@
 # Some settings for the output.
 output:
-    basename: vacbaffle-2.5
+    basename: vacbaffle-1.875
     baseunit: mm  # Convert measurements to be more printer-friendly.
 
 # Sketch out the dimensions of the bucket so we can cut the curve from
@@ -25,9 +25,8 @@ inlet:
     fitting:
         # These measurements are from the tapered fitting at the vacuum end of
         # a hose.
-        max: 2.64 in
-        min: 2.6325 in  # was actually 2.63 at 1.0 long, but this lets me make it little
-                        # bit shorter so it actually fits my print bed.
+        max: 2.280 in
+        min: 2.245 in
         length: 0.75 in
 
         fudge: 0.04 in   # How much clearance do we add? This is really a function of
@@ -35,26 +34,26 @@ inlet:
                         # and what material you're printing with.
 
     clip:
-        width: 1.0 in # to fit a 3/4" tab that's on top of the hose fitting
+        width: 0.85 in # to fit a 3/4" tab that's on top of the hose fitting
         depth: 1.25 in # how far in should the notch go
         leave: 0.10 in # how much meat to leave above the hose fitting
-        catch: 0.07 in # how much of a lip to leave for hose clip to hook onto
+        catch: 0.1 in # how much of a lip to leave for hose clip to hook onto
 
 outlet:
     thick: 0.125 in # general part thickness
 
     flange:
         dia:  4.0 in  # diameter of base
-        boltcirc: 3.25 in  # diameter of bolt circle
+        boltcirc: 3.0 in  # diameter of bolt circle
         pilot: 0.250 in # drill clean to fit 1/4" bolt
                         # this will also make a backing washer you can print
                         # don't forget to caulk on the joint itself
     fitting:
         # These measurements come off the tapered fitting at the business
         # end of a hose.
-        max: 2.285 in
-        min: 2.250 in
-        length: 1.50 in
+        max: 1.78 in
+        min: 1.73 in
+        length: 1.5 in
 
         fudge: 0.03 in  # And again, how much clearance do we give it?
 
@@ -66,7 +65,7 @@ support:
     depth: 0.5 in
     pilot: 0.11 in  # Again, drill out 7/64" and use #6 screws.
 
-    offset: 4.0 in   # How far down from the top of the bucket you want the supports to be.
+    offset: 3.5 in   # How far down from the top of the bucket you want the supports to be.
                      # You gotta kinda guesstimate based on the final height of the inlet
                      # and the thickness of your baffle sheet. But this isn't super critical
                      # because this setting only adjusts the outer radius to make it fit the
