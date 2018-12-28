@@ -54,12 +54,12 @@ def build_knob(dims, bolt):
 
     return knob
 
-if __name__ == "__cq_freecad_module__":
-    cs.clear()
 
-    dims = cs.Dims('scripts/misc/boltknob.yml')
+cs.clear()
 
-    for name, bolt in dims.bolts.items():
-        obj = build_knob(dims, bolt)
-        obj.val().label = "n%d-%s" % (dims.knob.points, urllib.parse.quote(name, safe=""))
-        cs.showsave(obj, dims)
+dims = cs.Dims('scripts/misc/boltknob.yml')
+
+for name, bolt in dims.bolts.items():
+    obj = build_knob(dims, bolt)
+    obj.val().label = "n%d-%s" % (dims.knob.points, urllib.parse.quote(name, safe=""))
+    cs.showsave(obj, dims)

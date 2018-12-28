@@ -240,26 +240,24 @@ def build_spacer(dims, width):
                )
     return spacer
 
-# Do I even want to test for this? Will require refactoring later
-# when I get this stuff running outside of FreeCAD. TODO.
-if __name__ == "__cq_freecad_module__":
-    dims = cs.Dims('scripts/bikes/truing-stand/dimensions.yml')
 
-    names = ['bracket', 'indicator', 'slider']
-    for name in names:
-        obj = globals()["build_" + name](dims) # oh god
-        obj.val().label = name
-        cs.showsave(obj, dims)
+dims = cs.Dims('scripts/bikes/truing-stand/dimensions.yml')
 
-    # This is one example of where the list->dict conversion rears its head. Blarg.
-    for width in dims.spacer.widths.values():
-        obj = build_spacer(dims, width)
-        obj.val().label = "spacer-%d" % width
-        doc = cs.showsave(obj, dims)
+names = ['bracket', 'indicator', 'slider']
+for name in names:
+    obj = globals()["build_" + name](dims) # oh god
+    obj.val().label = name
+    cs.showsave(obj, dims)
 
-        # Hack. Because we don't need to see *all* the spacers.
-        import FreeCAD
-        FreeCAD.closeDocument(FreeCAD.ActiveDocument.ActiveObject.Label)
-    else:
-        FreeCAD.newDocument(obj.val().label)
-        cs.pretty(obj) # But would be nice to see one.
+# This is one example of where the list->dict conversion rears its head. Blarg.
+for width in dims.spacer.widths.values():
+    obj = build_spacer(dims, width)
+    obj.val().label = "spacer-%d" % width
+    doc = cs.showsave(obj, dims)
+
+    # Hack. Because we don't need to see *all* the spacers.
+    import FreeCAD
+    FreeCAD.closeDocument(FreeCAD.ActiveDocument.ActiveObject.Label)
+else:
+    FreeCAD.newDocument(obj.val().label)
+    cs.pretty(obj) # But would be nice to see one.

@@ -59,9 +59,9 @@ def build(dims):
 
     return base.union(lav).union(wire)
 
-if __name__ == "__cq_freecad_module__":
-    cs.clear()
 
-    dims = cs.Dims('scripts/misc/lavmic-clip.yml')
-    obj = build(dims)
-    cs.showsave(obj, dims)
+cs.clear()
+
+dims = cs.Dims('scripts/misc/lavmic-clip.yml')
+obj = build(dims)
+cs.showsave(obj, dims)

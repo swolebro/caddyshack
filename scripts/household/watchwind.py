@@ -53,9 +53,9 @@ def build(dims):
 
     return result
 
-if __name__ == "__cq_freecad_module__":
-    cs.clear()
 
-    dims = cs.Dims('scripts/household/watchwind.yml')
-    obj = build(dims)
-    cs.showsave(obj, dims)
+cs.clear()
+
+dims = cs.Dims('scripts/household/watchwind.yml')
+obj = build(dims)
+cs.showsave(obj, dims)

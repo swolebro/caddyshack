@@ -211,31 +211,30 @@ def build_support(dims):
     return support.intersect(bucket)
 
 
-if __name__ == "__cq_freecad_module__":
-    cs.clear()
+cs.clear()
 
-    dims = cs.Dims('scripts/shop/vacbaffle.yml')
+dims = cs.Dims('scripts/shop/vacbaffle.yml')
 
-    # Some calculated dimensions.
-    dims.bucket.slope = (dims.bucket.topdia - dims.bucket.botdia)/(2*dims.bucket.height)
+# Some calculated dimensions.
+dims.bucket.slope = (dims.bucket.topdia - dims.bucket.botdia)/(2*dims.bucket.height)
 
-    # Applying fudge factors.
-    dims.outlet.fitting.max += dims.outlet.fitting.fudge
-    dims.outlet.fitting.min += dims.outlet.fitting.fudge
-    dims.inlet.fitting.max += dims.inlet.fitting.fudge
-    dims.inlet.fitting.min += dims.inlet.fitting.fudge
+# Applying fudge factors.
+dims.outlet.fitting.max += dims.outlet.fitting.fudge
+dims.outlet.fitting.min += dims.outlet.fitting.fudge
+dims.inlet.fitting.max += dims.inlet.fitting.fudge
+dims.inlet.fitting.min += dims.inlet.fitting.fudge
 
 
-    outlet, washer  = build_outlet(dims)
-    outlet.val().label = "outlet"
-    cs.showsave(outlet, dims)
-    washer.val().label = "outlet-washer"
-    cs.showsave(washer, dims)
+outlet, washer  = build_outlet(dims)
+outlet.val().label = "outlet"
+cs.showsave(outlet, dims)
+washer.val().label = "outlet-washer"
+cs.showsave(washer, dims)
 
-    obj = build_inlet(dims)
-    obj.val().label = "inlet"
-    cs.showsave(obj, dims)
+obj = build_inlet(dims)
+obj.val().label = "inlet"
+cs.showsave(obj, dims)
 
-    obj  = build_support(dims)
-    obj.val().label = "support"
-    cs.showsave(obj, dims)
+obj  = build_support(dims)
+obj.val().label = "support"
+cs.showsave(obj, dims)

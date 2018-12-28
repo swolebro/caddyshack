@@ -48,34 +48,34 @@ def build_standoff(toe, height, boardcut, hbuffer, holesize, countersunk):
     standoff = standoff.union(holepart)
     return standoff
 
-if __name__ == "__cq_freecad_module__":
-    cs.clear()
 
-    dims = cs.Dims('scripts/electronics/standoff.yml')
-    ds = dims.standoff
-    dw = dims.wireclamp
+cs.clear()
 
-    # Calculate buffer for the holes.
-    if dims.countersunk:
-        hbuffer = (dims.countersunk)*1.1
-    else:
-        hbuffer = (dims.pilot)*1.75
+dims = cs.Dims('scripts/electronics/standoff.yml')
+ds = dims.standoff
+dw = dims.wireclamp
 
-    for tname, toe in ds.toe.items():
-        for hname, height in ds.heights.items():
-            # First build the bottom part:
-            standoff = build_standoff(toe, height, ds.thick, hbuffer, dims.clearance, None)
-            standoff.val().label = "%s-%s" % (tname, hname)
-            cs.showsave(standoff, dims)
+# Calculate buffer for the holes.
+if dims.countersunk:
+    hbuffer = (dims.countersunk)*1.1
+else:
+    hbuffer = (dims.pilot)*1.75
 
-            # Close it so we don't spam too many.
-            FreeCAD.closeDocument(FreeCAD.ActiveDocument.ActiveObject.Label)
+for tname, toe in ds.toe.items():
+    for hname, height in ds.heights.items():
+        # First build the bottom part:
+        standoff = build_standoff(toe, height, ds.thick, hbuffer, dims.clearance, None)
+        standoff.val().label = "%s-%s" % (tname, hname)
+        cs.showsave(standoff, dims)
 
-        # Just show the last one.
-        FreeCAD.newDocument(standoff.val().label)
-        cs.pretty(standoff)
+        # Close it so we don't spam too many.
+        FreeCAD.closeDocument(FreeCAD.ActiveDocument.ActiveObject.Label)
 
-        # Then build a cap that finishes the retaining. These don't vary with height of the standoff.
-        cap = build_standoff(toe, dims.countersunk*0.25, None, hbuffer, dims.clearance, dims.countersunk)
-        cap.val().label = "cap-%s" % (tname)
-        cs.showsave(cap, dims)
+    # Just show the last one.
+    FreeCAD.newDocument(standoff.val().label)
+    cs.pretty(standoff)
+
+    # Then build a cap that finishes the retaining. These don't vary with height of the standoff.
+    cap = build_standoff(toe, dims.countersunk*0.25, None, hbuffer, dims.clearance, dims.countersunk)
+    cap.val().label = "cap-%s" % (tname)
+    cs.showsave(cap, dims)
