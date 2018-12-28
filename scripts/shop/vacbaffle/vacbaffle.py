@@ -3,7 +3,7 @@ shopvac. You'll need to BYOBucket and some material to make the baffle itself.
 
 This script will use the dimensions in "vacbaffle.yml" - since I've come up
 with profiles for a couple different hoses, you have to copy or (better) symlink
-to pick which one to use.
+to pick which one to use, or make a new profile to fit a different type of hose.
 
 This script will display on the debug console the envelope of the inlet (what
 should be the biggest component), so check that to make sure it'll fit your
@@ -11,7 +11,8 @@ printer before bothering to load the OBJ into your slicer. If it's too big,
 make some adjustments.
 
 It'll also display roughly what diameter your baffle should be, given the other
-paramters. Make a mental note of this for later, when you fabricate that.
+parameters. Make a mental note of this for later, when you fabricate that part
+separately.
 
 For further information on printing, assembly, and use, see the video here:
 https://www.youtube.com/watch?v=Evu_HuDse4M
@@ -121,17 +122,19 @@ def build_inlet(dims):
                 .extrude(length)
             )
 
-    clip = (inlet.faces(">Z")
-                .workplane(offset=-di.thick+di.clip.leave)
-                .move(L/2 - di.clip.catch/2 - di.clip.depth/2, 0)
-                .rect(di.clip.depth-di.clip.catch, di.clip.width)
-                .extrude(di.clip.catch, combine=False)
-                .faces(">Z")
-                .workplane()
-                .move(di.clip.catch/2, 0)
-                .rect(di.clip.depth, di.clip.width)
-                .extrude(di.thick)
-            )
+    # Make this part opional.
+    if di.clip:
+        clip = (inlet.faces(">Z")
+                    .workplane(offset=-di.thick+di.clip.leave)
+                    .move(L/2 - di.clip.catch/2 - di.clip.depth/2, 0)
+                    .rect(di.clip.depth-di.clip.catch, di.clip.width)
+                    .extrude(di.clip.catch, combine=False)
+                    .faces(">Z")
+                    .workplane()
+                    .move(di.clip.catch/2, 0)
+                    .rect(di.clip.depth, di.clip.width)
+                    .extrude(di.thick)
+                )
 
     bucket = (cq.Workplane("XY")
                 .move(0, -rhi+di.fitting.max)
@@ -165,7 +168,10 @@ def build_inlet(dims):
             pilots.append(p)
 
     inlet = inlet.fillet(di.thick/4)
-    inlet = inlet.cut(bucket).cut(taper).cut(clip)
+    inlet = inlet.cut(bucket).cut(taper)
+
+    if di.clip:
+        inlet = inlet.cut(clip)
 
     for p in pilots:
         inlet = inlet.cut(p)
@@ -211,9 +217,35 @@ def build_support(dims):
     return support.intersect(bucket)
 
 
-cs.clear()
+def build_debug(dims):
 
-dims = cs.Dims('scripts/shop/vacbaffle.yml')
+    parts = []
+
+    # Rely on the similarity of how I structured these files to make the
+    # debug prints... Just thin-wall tapers of the same size.
+    for d in dims.inlet, dims.outlet:
+       part = (cq.Workplane("XY")
+                .circle(d.fitting.min/2 + d.thick/4)
+                .workplane(offset=d.fitting.length)
+                .circle(d.fitting.max/2 + d.thick/4)
+                .loft()
+              )
+
+       taper = (cq.Workplane("XY")
+                .circle(d.fitting.min/2)
+                .workplane(offset=d.fitting.length)
+                .circle(d.fitting.max/2)
+                .loft()
+              )
+
+       part = part.cut(taper)
+
+       parts.append(part)
+    return parts
+
+
+cs.clear()
+dims = cs.Dims('scripts/shop/vacbaffle/vacbaffle.yml')
 
 # Some calculated dimensions.
 dims.bucket.slope = (dims.bucket.topdia - dims.bucket.botdia)/(2*dims.bucket.height)
@@ -223,6 +255,13 @@ dims.outlet.fitting.max += dims.outlet.fitting.fudge
 dims.outlet.fitting.min += dims.outlet.fitting.fudge
 dims.inlet.fitting.max += dims.inlet.fitting.fudge
 dims.inlet.fitting.min += dims.inlet.fitting.fudge
+
+if dims.get('debug', False):
+    inlet, outlet = build_debug(dims)
+    inlet.val().label = "test-inlet"
+    outlet.val().label = "test-outlet"
+    cs.showsave(inlet, dims)
+    cs.showsave(outlet, dims)
 
 
 outlet, washer  = build_outlet(dims)
