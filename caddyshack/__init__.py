@@ -44,6 +44,7 @@ def showsave(obj, dims, dest=None):
     if os.path.isdir(dest):
         dest = os.path.join(dest,'%s%s.obj' % (dims.output.basename, '-'+name if name else ''))
 
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
     Mesh.export(doc.Objects, str(dest))
 
     # Save the entire input file to the end of the gcode as a comment.
