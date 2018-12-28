@@ -1,0 +1,24 @@
+# Dimensions for a NEMA 1-15P unpolarized.
+
+# I printed this so long ago I can't remember what the settings were -
+# just porting the data over from some junk script I found lying around.
+# Some modifications could probably make it work for things like polarized
+# plugs or ones with grounds as well.
+
+output:
+    basename: plugcover
+    baseunit: mm  # Convert measurements to be more printer-friendly.
+
+width: 0.8 in
+depth: 0.6 in
+height: 0.8 in
+
+prongs:
+    spacing: 0.5 in
+    width: 0.28 in
+    thickness: 0.07 in
+    length: 0.7 in
+
+fillets:
+    edges: 0.0625 in
+    prongs: 0.03125 in
