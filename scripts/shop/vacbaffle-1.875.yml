@@ -20,6 +20,9 @@ output:
     basename: vacbaffle-1.875/vacbaffle-1.875
     baseunit: mm  # Convert measurements to be more printer-friendly.
 
+# Flag to turn on a couple of extra prints you can use for test fitting.
+debug: true
+
 # Sketch out the dimensions of the bucket so we can cut the curve from
 # our inlet adapter more easily.
 bucket:
