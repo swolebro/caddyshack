@@ -29,8 +29,8 @@ def pretty(obj=None):
     FreeCADGui.SendMsgToActiveView("ViewFit")
 
 def showsave(obj, dims, dest=None):
-    """Save the object to dest. Append the dims as a comment in the file for future
-    reference."""
+    """Save the object to dest. Append the original dims YAML and the final object's
+    values as a comment in the file for future reference."""
 
     name = obj.val().label
     doc = FreeCAD.newDocument(name)
@@ -51,16 +51,15 @@ def showsave(obj, dims, dest=None):
     # Save the input file, as opposed to the object in memory, since any
     # changes to the object after reading should be consistent from run to
     # run anyway.
-    with open(dest, 'a') as f, open(dims.file) as g:
+    with open(dest, 'a') as f:
 
         # By chance, these lines could actually be read back in as YAML
         # if you stripped the leading "# ", even the input and time entries.
-        lines = ["#\n",
-                 "# input: %s\n" % dims.file,
-                 "# time: %s\n" % datetime.datetime.utcnow(),
-                 "#\n"]
-        lines.extend("# " + line for line in  g.readlines())
-        f.write(''.join(lines))
+        lines = ["input: %s" % getattr(dims, "file", "null")]
+        lines.extend(dims.yml.split('\n'))
+        lines.extend(["","---",""])
+        lines.extend(yaml.dump(dims).split('\n'))
+        f.write('\n'.join(map("# ".__add__, lines)))
 
 class Dims(dict):
     """A deserialization of a YAML file that's . and [] access
@@ -96,7 +95,7 @@ class Dims(dict):
         return val
 
 
-    def __init__(self, file=None, *, obj=None, **kwargs):
+    def __init__(self, yml=None, *, obj=None, **kwargs):
         """You provide a YAML file that's a toplevel list or dict,
         this turns it into nested Dims all the way down.
 
@@ -112,11 +111,13 @@ class Dims(dict):
         """
 
         self.__dict__ = self
-        if file is not None:
-            self.file = file
+        if yml:
+            if os.path.exists(yml):
+                self.file = yml
+                yml = open(yml).read()
 
-        if file:
-            obj = yaml.load(open(file))
+            self.yml = yml
+            obj = yaml.load(yml)
             kwargs = obj['output']
 
         if isinstance(obj, list):
