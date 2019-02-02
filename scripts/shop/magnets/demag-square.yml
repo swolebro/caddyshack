@@ -1,0 +1,32 @@
+output:
+    basename: demag-tool-square
+    baseunit: mm
+
+dia: 4 in           # Overall diameter. Obviously must be large enough to
+                    # accommodate the array. A bit of excess will make it
+                    # easier to wipe chips and other magnetically attached
+                    # crap too.
+
+base:  0.625 in     # Thickness of the part. Needs to be thicker than the bolt
+                    # cap height or magnet depth, plus some backer.
+
+fillet: 0.125 in
+
+bolt:
+    pilot: 0.495 in  # Drill to 1/2" for the bolt.
+    cap: 0.400 in  # Made deeper than the real 0.344" measurement to allow room for sanding.
+
+    # These are sizes I know work from previously making parametric knobs.
+    wrench: 0.75 in
+    fudge: 3.5%
+
+array:
+    dia: 2.625 in
+    N: 16
+
+mag:
+    kind: square     # Either "round" or "square"
+    size: 10 mm      # Measurement across.
+    fudge: 0.35 mm   # 0.4mm was a slip fit. Going to make this a hair tighter.
+
+    depth: 13 mm     # Extra depth to leave room for sanding the top smooth.
