@@ -1,0 +1,38 @@
+# Heavy duty mirror clips.
+
+# This is for a 3x5' mirror mounted vertically on a rough cinder block surface.
+# So, I used a total of six clips to support the weight, keep it in place, and
+# stop it from vibrating when weights get dropped. Two on each the top and bottom
+# (about 3" from the ends), and then one on each side (right in the middle). The
+# clips include a slight standoff to make up for the the shit mortar job,
+# which sticks out beyond the wall up to 1/4" in some places.
+
+# Prior to a remodling, I had a similar mirror which was mounted on plywood (for
+# the standoff) screwed into the block, then held in with the standard chintzy
+# clear plastic clips. It would rattle all the time though, so I ended up shiming
+# it with newspaper to remove the vibrations. Janky as fuck. That mirror broke
+# when taking it out of the gym (Fuck! 7 years bad gains!), so as long as I was
+# redoing it, I was going to redo it right.
+
+# Nearly two years later, I'm getting around to publishing the files. And tbh,
+# my gains have been pretty shit. Hah.
+
+# My notes say I printed this with support, 50% infill, and a slightly thicker
+# wall thickness (5 layers, because the plastic is cheap and the mirror wasn't,
+# so better safe than sorry). Has held up great, and no vibrations whatsoever.
+
+output:
+    basename: mirror-clips
+    baseunit: mm
+
+mirror: 0.15625 in
+
+screw:
+    head: 0.375 in
+    clearance: 0.195 in # 3/16", plus some slack
+
+clip:
+    width: 1.0 in
+    overhang: 0.5 in
+    standoff: 0.375 in
+    fillet: 0.125 in
