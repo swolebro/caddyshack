@@ -64,6 +64,11 @@ and older script by mistake, without knowing/fixing it. In that case, you can
 ``git log -p script_file_or_dir`` to find its last working state and checkout the code
 from that point in time.
 
+If a script doesn't work because of some YAML (\*.yml) file missing, then it's probably
+because I wrote a script and provided multiple sets of working dimensions for producing
+parts. In those cases, I use a symlink to the file to pick the dimensions I want to use,
+and I don't commit that to the repo (see the ``.gitignore`` files throughout the repo).
+
 .. _below:
 
 Quick Guide to Running FreeCAD/CadQuery
@@ -88,16 +93,16 @@ And you should be on your way, with a reasonably recent and hopefully not-broken
 version of FreeCAD. The environment creation step takes a minute (and installs
 about 2 gigs worth of dependencies), but you only have to do that the first time.
 Browsing the menus to ``View > Workbench > CadQuery`` will add a CadQuery item
-to the menu list so you can open a script and run it (shortcut: F2). If you go to
+to the menu list so you can open a script and run it (shortcut: F9 nowadays, but customizable). If you go to
 ``Edit > Preferences > General`` you can set it so the workbench opens automatically
-every time.
+every time. If you're not seeing the CadQuery workbench, go to ``Tols > Addon Manager`` and install it there.
 
 At some point I'll get around to figuring out how to run these things from
 the commandline directly (or better, while editing in vim), but for now, this works,
 and it's handy to have the 3D view to check your work.
 
 Most of these scripts are going to be written for Python 3.6, FreeCAD
->=0.18_pre, the CadQuery plugin >=1.2.0, and to be used inside the plugin
+>=0.18_pre, the CadQuery >=1.2.0 with its plugin, and to be used inside the plugin
 workbench. These designs are all very specific-use, so I'm not worried about
 other people needing to be able to run my code verbatim anyway. I'm just
 putting it up here for you to have examples - an addendum to those provided
@@ -128,8 +133,8 @@ Printed Parts
 My prints are done with a Lulzbot Mini, usually with ABS. Most measurements are
 in inches, because: 1. 'murica. 2. Fuck you, world. It should be rather obvious
 when you load an STL or OBJ into your slicer whether you need to scale it by
-25.4x or not. At some point I may figure out a shortcut for scaling everything
-prior to exporting.
+25.4x or not. For a lot of the items generated here, the settings/dimension
+files should handle that automatically.
 
 For the prints that are to be used as-is, I typically stick with fine settings,
 4-ish shells, 30-50% infill, and zig-zag support. Yes, the prints are slow, but
@@ -170,7 +175,7 @@ Duramax drag-tip torch, so you can just run it along the stencil. Shouldn't be t
 hard to apply the same idea for other drag-tip torches. (There are much cheaper
 and adequate alternatives to Hypertherm today.)
 
-Most of these I'll print at a higher speed with lower infill. Stenciles still end
+Most of these I'll print at a higher speed with lower infill. Stencils still end
 up being 100% solid though, just by virtue of their thinness.
 
 I guess some of this code could be modified for woodworking (eg. router rigs),
