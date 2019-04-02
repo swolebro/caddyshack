@@ -1,0 +1,42 @@
+# These are the dimensions to make a splined wrench tool for the nipples on
+# Mavic UST rims. At least, on my Kysrium ones. Also used for making a tool
+# to hold the bladed spoke in place.
+
+# These dimension worked, well enough, using PETG, a fine layer height,
+# high infill, and 0.5mm nozzle.
+
+output:
+    basename: mavic-spokes
+    baseunit: mm  # Convert measurements to be more printer-friendly.
+
+# Some parameters for the knob shape we're using as the basis for both tools.
+knob:
+    size: 40 mm # Nominal size of the knob.
+    base: 9 mm # Height of the knob.
+    stickout: 3 mm # The part that contacts the spoke/nipple sticks out a bit.
+                   # Gives it more strength there, and more clearance from the rim
+                   # in the case of the nipple wrench.
+    N: 6
+    fillet: 2 mm
+
+spoke:
+    dia: 2.1 mm # Clearance to get the tool around the spoke.
+    thick: 1.1 mm # Snug fit for the spoke blade holding tool.
+
+nipple:
+    dia: 5.7 mm  # Really had to mess with this and depth to find one for my printer/material that fit.
+    height: 5.5 mm
+
+    spline:
+        N: 6  # How many splines.
+        kind: vee  # Only supporting vee for now... because it looks like these are V-shaped grooves.
+                   # I could be wrong, since these parts are small and not precisely made, but close enough.
+                   # It's gonna print pretty round-ish anyway.
+
+        depth: 35 %  # How far into the nipple does the spline protrude?
+
+        size: 3 mm # Really, for a vee, this doesn't matter, so long as it isn't absurdly small.
+                   # The profile of the spline engagement will depend on the protrusion depth.
+
+
+
