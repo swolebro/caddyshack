@@ -61,6 +61,14 @@ def showsave(obj, dims, dest=None):
         lines.extend(yaml.dump(dims).split('\n'))
         f.write('\n'.join(map("# ".__add__, lines)))
 
+def copy(obj):
+    """A hack for copying CadQuery objects. Useful, say, if you make a base object, then
+    want one variant with a bolt hole and another variant that houses a retaining nut.
+    Copy and modify each appropriately."""
+
+    return obj.translate((0, 0, 0))
+
+
 class Dims(dict):
     """A deserialization of a YAML file that's . and [] access
     friendly all the way down. A simple abomination."""
