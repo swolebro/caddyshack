@@ -3,7 +3,8 @@
 __pycache__
 
 # CAD files
-*.fcstd*
+/fcstd
+*.fcstd
 *.stl
 *.obj
 
