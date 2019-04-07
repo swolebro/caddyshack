@@ -120,9 +120,14 @@ class Dims(dict):
 
         self.__dict__ = self
         if yml:
-            if os.path.exists(yml):
-                self.file = yml
+            try:
                 yml = open(yml).read()
+                self.file = yml
+            except FileNotFoundError:
+                # Hacky check so that filepaths aren't interpreted as strings of YAML
+                # when the file does not exist.
+                if yml.endswith(".yml"):
+                    raise
 
             self.yml = yml
             obj = yaml.load(yml)
